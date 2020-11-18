@@ -1,4 +1,4 @@
-# Performance-Eval-Toolbox-for-Predictive-Analytics
+# Predictive-Performance-Eval-Toolbox (PPET)
 Contributors: Alex Beltran, Ran Xiao, Xiao Hu, Kais Gadhoumi, Christopher Scully, David Nahmias\
 Contact: ran.xiao@duke.edu
 
