@@ -4,6 +4,7 @@ Contact: ran.xiao@duke.edu
 
 ## Overview
 The performance evaluation toolbox provides key functions to evaluate outputs of predictive models with integration of timelineness.It takes time-series of prediction outputs and provides various performance metrics at given thresholds.
+- The toolbox considers patient records (case and control conditions) as individual samples for performance evaluation
 - Current timeliness factors include prediction horizon (time window when positive prediction is considered true positive) and prediction lead time (minimal time before event onset when positive prediction is considered true positive).
 - With timeliness integrated, the toolbox can be used to calculate various classic performance metrics (accuracy, sensitivty, spec., PPV, NPV, F1, etc.)
 - The toolbox also provides various approaches to evaluate false positivity.
