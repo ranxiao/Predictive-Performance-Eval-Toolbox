@@ -34,7 +34,7 @@ The performance evaluation toolbox provides key functions to evaluate outputs of
   - Process(thresholds=thresh, scorers=case_scorers, augmenter=augmenter).per_data, aggregate thresholds to be used, scorer type to calculate, and whether augmenter is used in one object
   - run(data: np.ndarray, processor: Callable), execute the options integrated in processor object on input data
  ## IO format and implementation template
- - **Input data to the toolbox are one 3 dimensional array (patient IDs, relative time in minutes to event onset, predictions) for case condition and one for control (patient IDs, relative time in minutes to record end time, predictions)**
+ - **Input data to the toolbox are one 3 dimensional array (patient IDs, relative time in hours to event onset, predictions) for case condition and one for control (patient IDs, relative time in hours to record end time, predictions)**
  - example usage: 
     - thresh = np.arange(4, 6)# in this example, two thresholds 4 and 5 are selected to generate MEWS triggers
     - case_scorers = [scorers.PosNeg(tmin=0, tmax=12)] # convert case predictions to 0/1 triggers based on given thresholds, time window for the calculation is 12h windows with 0h lead time before event onset
