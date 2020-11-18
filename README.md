@@ -14,6 +14,7 @@ The performance evaluation toolbox provides key functions to evaluate outputs of
 - python 3.7.6
 - matplotlib 3.1.3
 - numpy 1.18.1
+- typing 3.7.4.3
 
 ## Core functions
 - scorers.py
