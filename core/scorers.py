@@ -109,7 +109,7 @@ class ProportionWarning(object):
             return [np.nan]
         
 class ProportionWarning_case(object): # RanXiao, function added to handle False alarm proportion using whole duration omitting prediction horizon
-    def __init__(self, tlead: float, twin: float,tmax: float):
+    def __init__(self, tlead: float, twin: float):
         """
 
         :param tmin: Minimum time (measured before the event or discharge) to filter out model outputs
@@ -118,7 +118,6 @@ class ProportionWarning_case(object): # RanXiao, function added to handle False 
 
         self.tlead = tlead
         self.twin = twin
-        self.tmax = tmax
 
     def __call__(self, data: np.ndarray, threshold: float):
         """
@@ -131,7 +130,7 @@ class ProportionWarning_case(object): # RanXiao, function added to handle False 
         :return: Proportion of time spent under warning within tmin and tmax in a list
         """
         # RanXiao: Find candidate time indexes outside of prediction horizon (including both early and later alarms as false ones)
-        time_inds = np.logical_or(np.logical_and(data[:, 1] >= self.tlead+self.twin, data[:, 1] <= self.tmax),data[:, 1] <= self.tlead)
+        time_inds = np.logical_or(data[:, 1] >= self.tlead+self.twin,data[:, 1] <= self.tlead)
         # Check if any candidate points exist
         if any(time_inds):
             # Make copy of the data to be safe
@@ -179,7 +178,7 @@ class HourlyFalseAlarmRate(object):# RanXiao, function looks for number of false
             return [np.nan]
         
 class HourlyFalseAlarmRate_case(object): # RanXiao, function looks for number of false alarms/hour in case out of prediction horizon (too late + too early) 
-    def __init__(self, tlead: float, twin: float,tmax: float):
+    def __init__(self, tlead: float, twin: float):
         """
 
         :param tmin: Minimum time (measured before the event or discharge) to filter out model outputs
@@ -188,7 +187,6 @@ class HourlyFalseAlarmRate_case(object): # RanXiao, function looks for number of
 
         self.tlead = tlead
         self.twin = twin
-        self.tmax = tmax
 
     def __call__(self, data: np.ndarray, threshold: float):
         """
@@ -201,7 +199,7 @@ class HourlyFalseAlarmRate_case(object): # RanXiao, function looks for number of
         :return: Proportion of time spent under warning within tmin and tmax in a list
         """
         # RanXiao: Find candidate time indexes outside of prediction horizon (including both early and later alarms as false ones)
-        time_inds = np.logical_or(np.logical_and(data[:, 1] >= self.tlead+self.twin, data[:, 1] <= self.tmax),data[:, 1] <= self.tlead)
+        time_inds = np.logical_or(data[:, 1] >= self.tlead+self.twin,data[:, 1] <= self.tlead)
         # Check if any candidate points exist
         if np.logical_and(any(time_inds),(max(data[:, 1])-min(data[:, 1])-self.twin)>0):
             # Make copy of the data to be safe
