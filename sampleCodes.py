@@ -8,8 +8,8 @@ from core import scorers, Process, augmenters, utils, mews,run
 
 #load sample data
 sampleData=np.load('./sampleData.npz')
-case = sampleData['sampleCase'] # sample data dim (patID, relative time in minutes to recording ends, prediction)
-control = sampleData['sampleControl']
+case = sampleData['sampleCase'] # case data dim (patID, relative time in hours to event onset, prediction)
+control = sampleData['sampleControl']# control data dim (patID, relative time in hours to recording ends, prediction)
 print(len(np.unique(case[:, 0])))
 print(len(np.unique(control[:, 0])))
         
