@@ -496,13 +496,14 @@ class PerHour(object):
             time += self.step_size
         return out
 
-class Lead(object):
-    def __init__(self, lead_times: Sequence[float]):
+class Lead(object): #Ran, change prediction horizon of 12 to a variable as input twin
+    def __init__(self, lead_times: Sequence[float],twin:float):
         """
 
         :param lead_times: Iterable of lead_times to consider
         """
         self.lead_times  = lead_times
+        self.twin = twin
 
     def __call__(self, data: np.ndarray, threshold: float):
         """
@@ -515,13 +516,13 @@ class Lead(object):
         # of "On" warnings and # of warnings within the time range of interest
         """
         out = []
-        first = np.sum(np.logical_and(data[:, 1] >= self.lead_times[0], data[:, 1] <= (self.lead_times[0] + 12)))
+        first = np.sum(np.logical_and(data[:, 1] >= self.lead_times[0], data[:, 1] <= (self.lead_times[0] + self.twin)))
         for time in self.lead_times:
-            inds = np.logical_and(data[:, 1] >= time, data[:, 1] <= (time + 12))
+            inds = np.logical_and(data[:, 1] >= time, data[:, 1] <= (time + self.twin))
             crossings = data[inds, 2] >= threshold
             test = any(inds)
             if test:
-                if np.max(data[:, 1] <= time + 12):
+                if np.max(data[:, 1] <= time + self.twin):
                     out.append([int(any(crossings)), test, np.sum(inds) / first])
                 else:
                     out.append([int(any(crossings)), test, np.nan])
