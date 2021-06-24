@@ -136,3 +136,13 @@ plt.legend(['Case', 'Control','Combined'])
 plt.title('MEWS Warning Characteristic')
 plt.xlabel('MEWS Threshold')
 plt.ylabel('False alarm rate')
+
+'''This following block of codes demostrates the calculation of number of hit along different lead time within the prediction horizon '''
+thresh = np.arange(0, 14) #define threshold or thresholds to be used  
+# Define scorer for calculating false positive for case and control separately. for case it's defined as duration outside of prediction horizon, for control it's the whole duration
+case_scorers = [scorers.Lead(lead_times=np.arange(0,12),twin=12)] # 0h lead time and 12h prediction horizon
+# no augmentation is needed for calculation of false alarm proportion
+augmenter = augmenters.NoAugment()
+# generate FAP for case condition                
+case_processor = Process(thresholds=thresh, scorers=case_scorers, augmenter=augmenter).per_data
+case_count, case_count_raw = run(case, case_processor)
